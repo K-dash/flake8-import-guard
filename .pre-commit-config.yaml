@@ -1,0 +1,23 @@
+repos:
+  # - repo: https://github.com/pycqa/flake8
+  #   rev: 7.0.0  # The version of flake8 to use
+  #   hooks:
+  #   - id: flake8
+  #     additional_dependencies: [flake8-print]
+  #     files: .*\.py
+  - repo: local
+    hooks:
+      # Run the linter.
+      - id: lint
+        name: Lint
+        entry: make lint
+        types: [python]
+        language: system
+        pass_filenames: false
+      # Run the formatter.
+      - id: format
+        name: Format
+        entry: make format
+        types: [python]
+        language: system
+        pass_filenames: false
