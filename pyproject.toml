@@ -1,11 +1,11 @@
 [tool.poetry]
-name = "flake8-code-pattern-enforcer"
+name = "flake8-import-guard"
 version = "0.1.0"
 description = ""
 authors = ["K'  <51281148+K-dash@users.noreply.github.com>"]
 license = "MIT"
 readme = "README.md"
-packages = [{include = "src"}]
+packages = [{ include = "src" }]
 classifiers = [
     "License :: OSI Approved :: MIT License",
     "Programming Language :: Python :: 3",
@@ -13,15 +13,18 @@ classifiers = [
     "Programming Language :: Python :: 3.7",
     "Programming Language :: Python :: 3.8",
     "Programming Language :: Python :: 3.9",
-    "Programming Language :: Python :: 3.12"
+    "Programming Language :: Python :: 3.12",
 ]
 
 [tool.poetry.dependencies]
 python = "^3.12"
 flake8 = "^7.1.0"
+gitpython = "^3.1.43"
+python-dotenv = "^1.0.1"
+toml = "^0.10.2"
 
 [tool.poetry.plugins."flake8.extension"]
-CPE = "src.main:Flake8CodePatternEnforcer"
+CPE = "src.main:Flake8ImportGuard"
 
 [tool.poetry.group.dev.dependencies]
 ruff = "^0.5.5"
@@ -37,7 +40,7 @@ build-backend = "poetry.core.masonry.api"
 [tool.pytest.ini_options]
 testpaths = 'tests'
 pythonpath = "."
-addopts = '-p no:warnings'  # disable pytest warnings
+addopts = '-p no:warnings'                         # disable pytest warnings
 log_format = '%(name)s %(levelname)s: %(message)s'
 
 # ruff global settings
@@ -59,3 +62,6 @@ select = ['I', 'F', 'E', 'W', 'PL', 'PT']
 [tool.ruff.format]
 preview = true
 quote-style = 'double'
+
+[tool.flake8-import-guard]
+forbidden_imports = ["load_dotenv", "subprocess"]

@@ -1,249 +1,125 @@
-"""
-Flake8 plugin to detect and enforce code patterns in Python files.
-
-This plugin checks for newly added occurrences of specified patterns
-in modified files within a Git repository.
-It can be used to enforce coding standards, prevent usage of
-certain functions or variables, or maintain security practices.
-"""
-
 import ast
 import os
 import subprocess
-from typing import Any, List, Set, Tuple
+from typing import Any, Dict, Generator, List, Set, Tuple
+
+import toml
+from flake8.options.manager import OptionManager
 
 
-class CodePatternVisitor(ast.NodeVisitor):
-    """
-    AST visitor to find occurrences of specified patterns in the code.
+class Flake8ImportGuard:
+    name = "flake8-import-guard"
+    version = "0.1.0"
 
-    This visitor traverses the Abstract Syntax Tree (AST) of Python code and
-    records the locations where specified patterns are found in identifiers,
-    function names, class names, or string literals.
-    """
-
-    def __init__(self, target_patterns: Set[str]):
-        """
-        Initialize the CodePatternVisitor.
-
-        Args:
-            target_patterns (Set[str]):
-                A set of string patterns to search for in the code.
-        """
-        self.target_patterns = target_patterns
-        self.pattern_occurrences = {pattern: [] for pattern in target_patterns}
-
-    def visit(self, node):
-        """
-        Visit a node in the AST and check for target patterns.
-
-        This method is called for every node in the AST.
-        It checks if any of the target patterns are present in the node's
-        name, id, or string content.
-
-        Args:
-            node (ast.AST): The AST node being visited.
-        """
-        for pattern in self.target_patterns:
-            if (
-                hasattr(node, "name")
-                and isinstance(node.name, str)
-                and pattern in node.name
-            ):
-                self.pattern_occurrences[pattern].append((
-                    node.lineno,
-                    node.col_offset,
-                ))
-            elif (
-                hasattr(node, "id")
-                and isinstance(node.id, str)
-                and pattern in node.id
-            ):
-                self.pattern_occurrences[pattern].append((
-                    node.lineno,
-                    node.col_offset,
-                ))
-            elif isinstance(node, ast.Str) and pattern in node.s:
-                self.pattern_occurrences[pattern].append((
-                    node.lineno,
-                    node.col_offset,
-                ))
-        self.generic_visit(node)
-
-
-def get_git_root() -> str:
-    """
-    Get the root directory of the current Git repository.
-
-    Returns:
-        str: The path to the Git root directory,
-        or None if not in a Git repository.
-    """
-    try:
-        return (
-            subprocess.check_output(["git", "rev-parse", "--show-toplevel"])
-            .decode("utf-8")
-            .strip()
-        )
-    except subprocess.CalledProcessError:
-        return None
-
-
-def get_git_staged_and_modified_files() -> List[str]:
-    """
-    Get a list of staged and modified files in the current Git repository.
-
-    Returns:
-        List[str]: A list of file paths that are either staged or modified.
-    """
-    git_root = get_git_root()
-    if not git_root:
-        return []
-    try:
-        staged = (
-            subprocess.check_output(
-                ["git", "diff", "--cached", "--name-only"], cwd=git_root
-            )
-            .decode("utf-8")
-            .splitlines()
-        )
-        modified = (
-            subprocess.check_output(
-                ["git", "diff", "--name-only"], cwd=git_root
-            )
-            .decode("utf-8")
-            .splitlines()
-        )
-        return list(set(staged + modified))
-    except subprocess.CalledProcessError:
-        return []
-
-
-class Flake8CodePatternEnforcer:
-    """
-    Flake8 plugin to enforce code patterns in Python files.
-
-    This plugin checks for newly added occurrences of specified patterns in
-    modified files within a Git repository. It can be used to enforce coding
-    standards, prevent usage of certain functions or variables, or maintain
-    security practices.
-    """
-
-    name = "flake8-code-pattern-enforcer"
-    version = "0.3.1"
-
-    def __init__(self, tree: ast.AST, filename: str = ""):
-        """
-        Initialize the Flake8CodePatternEnforcer.
-
-        Args:
-            tree (ast.AST): The AST of the file being checked.
-            filename (str): The name of the file being checked.
-        """
+    def __init__(self, tree: ast.AST, filename: str):
         self.tree = tree
         self.filename = filename
+        self.config = self.load_config()
 
-    @classmethod
-    def add_options(cls, parser):
-        """
-        Add custom options to the Flake8 command-line parser.
-
-        Args:
-            parser: The OptionManager instance used by Flake8.
-        """
-        parser.add_option(
-            "--target-patterns",
-            default="[load_dotenv]",
-            parse_from_config=True,
-            help="List of patterns to detect, enclosed in square brackets",
-        )
-
-    @classmethod
-    def parse_options(cls, options):
-        """
-        Parse the custom options provided to the plugin.
-
-        This method processes the 'target-patterns' option, converting it from
-        a string to a set of patterns.
-
-        Args:
-            options: The parsed options from Flake8.
-        """
-        # Remove square brackets and split by comma
-        patterns = options.target_patterns.strip("[]").split(",")
-        # Remove whitespace and filter out empty strings
-        cls.target_patterns = set(
-            pattern.strip() for pattern in patterns if pattern.strip()
-        )
-
-    def run(self) -> List[Tuple[int, int, str, Any]]:
-        """
-        Run the plugin on the current file.
-
-        This method checks if the file is in a Git repository and
-        has been modified. If so, it compares the current version
-        with the previous version to detect
-        newly added occurrences of the target patterns.
-
-        Returns:
-            List[Tuple[int, int, str, Any]]: A list of Flake8 error tuples.
-            Each tuple contains the line number, column number, error message,
-            and type of the error.
-        """
-        if not self.filename:
-            return []
-
-        git_root = get_git_root()
-        if not git_root:
-            return []  # Not in a git repository
-
-        relative_filename = os.path.relpath(self.filename, git_root)
-        modified_files = get_git_staged_and_modified_files()
-
-        if relative_filename not in modified_files:
-            return []  # File not modified
-
-        visitor = CodePatternVisitor(self.target_patterns)
-        visitor.visit(self.tree)
-
+    @staticmethod
+    def load_config() -> Dict[str, List[str]]:
         try:
-            old_content = subprocess.check_output(
-                ["git", "show", f"HEAD:{relative_filename}"],
-                cwd=git_root,
-                stderr=subprocess.DEVNULL,
-            ).decode("utf-8")
-            old_tree = ast.parse(old_content)
-            old_visitor = CodePatternVisitor(self.target_patterns)
-            old_visitor.visit(old_tree)
+            with open("pyproject.toml", "r", encoding="utf-8") as f:
+                config = toml.load(f)
+            return config.get("tool", {}).get("flake8-import-guard", {})
+        except FileNotFoundError:
+            return {}
 
-            results = []
-            for pattern, occurrences in visitor.pattern_occurrences.items():
-                new_occurrences = set(occurrences) - set(
-                    old_visitor.pattern_occurrences[pattern]
+    @staticmethod
+    def add_options(option_manager: OptionManager) -> None:
+        option_manager.add_option(
+            "--enforce-patterns",
+            default="",
+            parse_from_config=True,
+            comma_separated_list=True,
+            help="Comma-separated list of import patterns to enforce",
+        )
+
+    @classmethod
+    def parse_options(cls, options: Any) -> None:
+        cls.enforce_patterns = options.enforce_patterns
+
+    def run(self) -> Generator[Tuple[int, int, str, type], None, None]:
+        forbidden_imports = self.config.get("forbidden_imports", [])
+        if not forbidden_imports:
+            return
+
+        # 新規ファイルかどうかを確認
+        is_new_file = not os.path.exists(self.filename)
+        if not is_new_file:
+            git_check = subprocess.run(
+                ["git", "ls-files", "--error-unmatch", self.filename],
+                capture_output=True,
+                text=True,
+                check=False,
+            )
+            is_new_file = git_check.returncode != 0
+
+        current_imports = self.get_imports(self.tree)
+
+        if is_new_file:
+            # 新規ファイルの場合は全てのimportをチェック
+            imports_to_check = current_imports
+            previous_imports = set()
+        else:
+            # 既存ファイルの場合は前回のコミットの状態を取得
+            try:
+                result = subprocess.run(
+                    ["git", "show", f"HEAD:{self.filename}"],
+                    capture_output=True,
+                    text=True,
+                    check=True,
                 )
-                for lineno, col_offset in new_occurrences:
-                    results.append((
-                        lineno,
-                        col_offset,
-                        f'CPE001 New occurrence of "{pattern}" added.'
-                        f"This is not allowed in this project."
-                        f"Please remove or revise this code.",
-                        type(self),
-                    ))
+                previous_content = result.stdout
+                previous_tree = ast.parse(previous_content)
+                previous_imports = self.get_imports(previous_tree)
+                imports_to_check = current_imports - previous_imports
+            except subprocess.CalledProcessError:
+                # Gitコマンドが失敗した場合（例：初回コミット前）は
+                # 全てのimportをチェック
+                imports_to_check = current_imports
+                previous_imports = set()
 
-            return results
+        # デバッグ用の出力
+        print(f"Is new file: {is_new_file}")
+        print(f"Current imports: {current_imports}")
+        print(f"Previous imports: {previous_imports}")
+        print(f"Imports to check: {imports_to_check}")
 
-        except subprocess.CalledProcessError:
-            # File is new, all occurrences are considered new
-            return [
-                (
-                    lineno,
-                    col_offset,
-                    f'CPE001 New occurrence of "{pattern}" found in a new file.'
-                    f"This is not allowed in this project."
-                    f"Please remove or revise this code.",
-                    type(self),
+        for node in ast.walk(self.tree):
+            if not isinstance(node, (ast.Import, ast.ImportFrom)):
+                continue
+            for alias in node.names:
+                import_name = (
+                    alias.name
+                    if isinstance(node, ast.Import)
+                    else (f"{node.module}.{alias.name}")
                 )
-                for pattern, occurrences in visitor.pattern_occurrences.items()
-                for lineno, col_offset in occurrences
-            ]
+                if import_name in imports_to_check:
+                    for forbidden in forbidden_imports:
+                        if forbidden in import_name:
+                            yield (
+                                node.lineno,
+                                node.col_offset,
+                                f"CPE001 Forbidden import found: {import_name}",
+                                type(self),
+                            )
+                            break  # 同じimportに対して複数の違反を報告しない
+
+    @classmethod
+    def get_imports(cls, tree: ast.AST) -> Set[str]:
+        imports = set()
+        for node in ast.walk(tree):
+            if isinstance(node, ast.Import):
+                imports.update(alias.name for alias in node.names)
+            elif isinstance(node, ast.ImportFrom):
+                if node.module:
+                    imports.update(
+                        f"{node.module}.{alias.name}" for alias in node.names
+                    )
+                else:
+                    imports.update(alias.name for alias in node.names)
+        return imports
+
+    def __iter__(self):
+        return self.run()

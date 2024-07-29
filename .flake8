@@ -45,8 +45,3 @@ ignore =
 # https://black.readthedocs.io/en/stable/guides/using_black_with_other_tools.html#flake8
 extend-ignore = E203
 filename = *.py
-target-patterns = []
-
-[flake8:local-plugins]
-extension =
-    CPE = src.main:Flake8CodePatternEnforcer
