@@ -12,6 +12,31 @@ Flake8 Import Guard is a Flake8 plugin that helps enforce import restrictions in
 - 🔍 Focuses on newly added imports in Git-versioned files
 - 🔗 Seamless integration with existing Flake8 workflows
 
+## Motivation
+
+Flake8 Import Guard is designed to address several common challenges in Python development.
+
+- **Enforcing Security Measures**
+    - Prevent the use of potentially unsafe or deprecated modules, enhancing the overall security of your codebase.
+    - Prevent the import of forbidden external libraries, maintaining better control over your project's external dependencies.
+
+- **Dependency Management**
+    - Restrict and control project dependencies, reducing complexity and potential conflicts.
+
+- **License Compliance**
+    - Ensure compliance with licensing requirements by preventing the use of libraries with incompatible licenses.
+
+- **Performance Optimization**
+    - Avoid the use of heavyweight or inefficient imports that could impact performance.
+
+- **Coding Standards Enforcement**
+    - Maintain consistent coding standards across your project by enforcing specific import patterns.
+
+- **Gradual Deprecation of Legacy Code**
+    - Facilitate the phasing out of old modules or deprecated imports as your project evolves.
+
+By using Flake8 Import Guard, development teams can proactively manage their codebase, ensuring better quality, security, and maintainability of their Python projects.
+
 ## Installation
 
 You can install Flake8 Import Guard using pip.
@@ -31,6 +56,8 @@ flake8 path/to/your/code
 ## Configuration
 
 You can configure Flake8 Import Guard using Flake8's standard configuration system or through `pyproject.toml`.
+
+For example, let's say you want to prohibit the use of `load_dotenv` and `subprocess` in your project. Here's how you would configure that.
 
 ### Using Flake8 Configuration
 
