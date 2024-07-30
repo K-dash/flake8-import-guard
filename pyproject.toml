@@ -1,11 +1,11 @@
 [tool.poetry]
 name = "flake8-import-guard"
-version = "0.1.5"
-description = ""
+version = "0.1.6"
+description = "Flake8 plugin to enforce import restrictions in Python projects."
 authors = ["K'  <51281148+K-dash@users.noreply.github.com>"]
 license = "MIT"
 readme = "README.md"
-homepage = "https://github.com/K-dash/flake8-import-guard"
+homepage = "https://qiita.com/inetcpl"
 repository = "https://github.com/K-dash/flake8-import-guard"
 keywords = ["flake8", "plugin", "import", "linter"]
 packages = [{ include = "src" }]
@@ -24,7 +24,7 @@ classifiers = [
 
 [tool.poetry.dependencies]
 python = "^3.8.1"
-flake8 = "^6.1.0"
+flake8 = "^7.1.0"
 gitpython = "^3.1.43"
 python-dotenv = "^1.0.1"
 toml = "^0.10.2"
