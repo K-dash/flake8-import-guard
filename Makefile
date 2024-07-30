@@ -44,7 +44,7 @@ build:
 
 .PHONY: build_test
 build_test:
-	pip install dist/flake8_import_guard-0.1.5-py3-none-any.whl
+	pip install dist/flake8_import_guard-0.1.6-py3-none-any.whl
 	flake8 --version
 
 .PHONY: all
