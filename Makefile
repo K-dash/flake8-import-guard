@@ -21,8 +21,8 @@ lint:
 test:
 	poetry run pytest
 
-.PHONY: output_coverage
-output_coverage:
+.PHONY: output_cov
+output_cov:
 	@rm -rf htmlcov
 	@mkdir -p htmlcov
 	poetry run coverage run -m pytest
