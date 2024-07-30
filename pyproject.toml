@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "flake8-import-guard"
-version = "0.1.1"
+version = "0.1.2"
 description = ""
 authors = ["K'  <51281148+K-dash@users.noreply.github.com>"]
 license = "MIT"
@@ -42,7 +42,7 @@ build-backend = "poetry.core.masonry.api"
 [tool.pytest.ini_options]
 testpaths = 'tests'
 pythonpath = "."
-addopts = '-p no:warnings'  # disable pytest warnings
+addopts = '-p no:warnings'                         # disable pytest warnings
 log_format = '%(name)s %(levelname)s: %(message)s'
 
 # ruff global settings
