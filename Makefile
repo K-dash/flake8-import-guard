@@ -36,5 +36,16 @@ clean:
 	rm -f .coverage
 	rm -f .coverage.*
 
+.PHONY: build
+build:
+	poetry build
+	python -m venv test_env
+	source test_env/bin/activate
+
+.PHONY: build_test
+build_test:
+	pip install dist/flake8_import_guard-0.1.0-py3-none-any.whl
+	flake8 --version
+
 .PHONY: all
 all: format lint test
