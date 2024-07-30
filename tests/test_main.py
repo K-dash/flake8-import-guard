@@ -9,6 +9,13 @@ from src.main import Flake8ImportGuard
 
 @pytest.fixture
 def enforcer():
+    """
+    Fixture to create a Flake8ImportGuard instance for testing.
+
+    Returns:
+        function: A function that creates a Flake8ImportGuard instance.
+    """
+
     def _create_enforcer(code="", filename="test_file.py"):
         tree = ast.parse(code)
         return Flake8ImportGuard(tree, filename)
@@ -17,6 +24,7 @@ def enforcer():
 
 
 def test_get_imports(enforcer):
+    """Test the get_imports method of Flake8ImportGuard."""
     code = "import os\nfrom datetime import datetime"
     test_enforcer = enforcer(code)
     imports = test_enforcer.get_imports(test_enforcer.tree)
@@ -24,9 +32,10 @@ def test_get_imports(enforcer):
 
 
 def test_run_with_forbidden_import(enforcer):
+    """Test the run method with a forbidden import."""
     code = "from dotenv import load_dotenv"
     test_enforcer = enforcer(code)
-    test_enforcer.config = {"forbidden_imports": ["load_dotenv"]}
+    Flake8ImportGuard.forbidden_imports = ["load_dotenv"]
     violations = list(test_enforcer.run())
     assert len(violations) == 1
     assert violations[0][2] == (
@@ -35,9 +44,10 @@ def test_run_with_forbidden_import(enforcer):
 
 
 def test_run_with_allowed_import(enforcer):
+    """Test the run method with an allowed import."""
     code = "import os"
     test_enforcer = enforcer(code)
-    test_enforcer.config = {"forbidden_imports": ["load_dotenv"]}
+    Flake8ImportGuard.forbidden_imports = ["load_dotenv"]
     violations = list(test_enforcer.run())
     assert len(violations) == 0
 
@@ -50,11 +60,8 @@ def test_run_with_allowed_import(enforcer):
         "expected_violations",
     ),
     [
-        # 新規ファイル
         (True, "", "from dotenv import load_dotenv", 1),
-        # 既存ファイルに新しい禁止インポートを追加j
         (False, "import os", "import os\nfrom dotenv import load_dotenv", 1),
-        # 既存ファイルに変更なし
         (
             False,
             "from dotenv import load_dotenv",
@@ -70,6 +77,7 @@ def test_run_with_different_file_states(
     current_content,
     expected_violations,
 ):
+    """Test the run method with different file states and contents."""
     test_enforcer = enforcer(current_content)
     with patch("os.path.exists", return_value=not is_new_file), patch(
         "subprocess.run"
@@ -81,14 +89,8 @@ def test_run_with_different_file_states(
             else MagicMock(returncode=1),
         ]
 
-        test_enforcer.config = {"forbidden_imports": ["load_dotenv"]}
+        Flake8ImportGuard.forbidden_imports = ["load_dotenv"]
         violations = list(test_enforcer.run())
-
-        print(f"Test case - Is new file: {is_new_file}")
-        print(f"Test case - Previous content: {previous_content}")
-        print(f"Test case - Current content: {current_content}")
-        print(f"Test case - Expected violations: {expected_violations}")
-        print(f"Test case - Actual violations: {violations}")
 
     assert len(violations) == expected_violations, (
         f"Expected {expected_violations} violations, "
@@ -101,31 +103,51 @@ def test_run_with_different_file_states(
 
 
 def test_add_options():
+    """Test the add_options method."""
     option_manager = MagicMock()
     Flake8ImportGuard.add_options(option_manager)
     option_manager.add_option.assert_called_once_with(
-        "--enforce-patterns",
+        "--forbidden-imports",
         default="",
         parse_from_config=True,
         comma_separated_list=True,
-        help="Comma-separated list of import patterns to enforce",
+        help="Comma-separated list of forbidden imports",
     )
 
 
 def test_parse_options():
+    """Test the parse_options method without pyproject.toml configuration."""
     options = MagicMock()
-    options.enforce_patterns = ["pattern1", "pattern2"]
-    Flake8ImportGuard.parse_options(options)
-    assert Flake8ImportGuard.enforce_patterns == ["pattern1", "pattern2"]
+    options.forbidden_imports = ["pattern1", "pattern2"]
+    with patch.object(
+        Flake8ImportGuard, "load_pyproject_config", return_value={}
+    ):
+        Flake8ImportGuard.parse_options(options)
+    assert Flake8ImportGuard.forbidden_imports == ["pattern1", "pattern2"]
+
+
+def test_parse_options_with_pyproject():
+    """Test the parse_options method with pyproject.toml configuration."""
+    options = MagicMock()
+    options.forbidden_imports = ["pattern1"]
+    with patch.object(
+        Flake8ImportGuard,
+        "load_pyproject_config",
+        return_value={"forbidden_imports": ["pattern2"]},
+    ):
+        Flake8ImportGuard.parse_options(options)
+    assert set(Flake8ImportGuard.forbidden_imports) == {"pattern1", "pattern2"}
 
 
 def test_run_empty_forbidden_imports(enforcer):
+    """Test the run method with empty forbidden_imports."""
     test_enforcer = enforcer("")
-    test_enforcer.config = {"forbidden_imports": []}
+    Flake8ImportGuard.forbidden_imports = []
     assert list(test_enforcer.run()) == []
 
 
 def test_run_git_check(enforcer):
+    """Test the run method when git check fails."""
     with patch("os.path.exists", return_value=True), patch(
         "subprocess.run"
     ) as mock_run:
@@ -134,12 +156,13 @@ def test_run_git_check(enforcer):
             MagicMock(returncode=1),  # git show (fails)
         ]
         test_enforcer = enforcer("import os")
-        test_enforcer.config = {"forbidden_imports": ["os"]}
+        Flake8ImportGuard.forbidden_imports = ["os"]
         violations = list(test_enforcer.run())
         assert len(violations) == 1
 
 
 def test_run_git_command_fails(enforcer):
+    """Test the run method when git command fails."""
     with patch("os.path.exists", return_value=True), patch(
         "subprocess.run"
     ) as mock_run:
@@ -148,12 +171,13 @@ def test_run_git_command_fails(enforcer):
             subprocess.CalledProcessError(1, "git show"),  # git show (fails)
         ]
         test_enforcer = enforcer("import os")
-        test_enforcer.config = {"forbidden_imports": ["os"]}
+        Flake8ImportGuard.forbidden_imports = ["os"]
         violations = list(test_enforcer.run())
         assert len(violations) == 1
 
 
 def test_get_imports_with_module(enforcer):
+    """Test the get_imports method with a module import."""
     code = "from os import path"
     test_enforcer = enforcer(code)
     imports = test_enforcer.get_imports(test_enforcer.tree)
@@ -161,6 +185,7 @@ def test_get_imports_with_module(enforcer):
 
 
 def test_get_imports_without_module(enforcer):
+    """Test the get_imports method with a relative import."""
     code = "from . import some_function"
     test_enforcer = enforcer(code)
     imports = test_enforcer.get_imports(test_enforcer.tree)
