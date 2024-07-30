@@ -16,7 +16,7 @@ class Flake8ImportGuard:
     """
 
     name = "flake8-import-guard"
-    version = "0.1.2"
+    version = "0.1.3"
     forbidden_imports: List[str] = []
 
     def __init__(self, tree: ast.AST, filename: str):
