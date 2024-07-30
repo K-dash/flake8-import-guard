@@ -4,10 +4,10 @@ Flake8 Import Guard is a Flake8 plugin that helps enforce import restrictions in
 
 ## Features
 
-- Detects forbidden imports in Python files
-- Supports configuration through Flake8's standard configuration system and `pyproject.toml`
-- Focuses on newly added imports, ignoring existing ones in version-controlled files
-- Easy integration with existing Flake8 setups
+- 🚫 Detects forbidden imports in new and modified files
+- 🔧 Configurable via .flake8 or pyproject.toml
+- 🔍 Focuses on newly added imports in Git-versioned files
+- 🔗 Seamless integration with existing Flake8 workflows
 
 ## Installation
 
