@@ -1,12 +1,14 @@
 
 ![GitHub License](https://img.shields.io/github/license/K-dash/flake8-import-guard)
-![PyPI Version](https://img.shields.io/pypi/v/flake8-import-guard)
-![Python Version](https://img.shields.io/badge/dynamic/toml?url=https://raw.githubusercontent.com/K-dash/flake8-import-guard/main/pyproject.toml&query=%24.tool.poetry.dependencies.python&label=python)
+[![PyPI version](https://img.shields.io/pypi/v/flake8-import-guard.svg)](https://pypi.org/project/flake8-import-guard/)
+[![Python versions](https://img.shields.io/pypi/pyversions/flake8-import-guard.svg)](https://pypi.org/project/flake8-import-guard/)
 [![codecov](https://codecov.io/gh/K-dash/flake8-import-guard/graph/badge.svg?token=4GG16B2ZU0)](https://codecov.io/gh/K-dash/flake8-import-guard)
 
 # Flake8 Import Guard
 
 Flake8 Import Guard is a Flake8 plugin that helps enforce import restrictions in your Python projects. It allows you to specify forbidden imports and detects their usage in your codebase, focusing on newly added imports in version-controlled files.
+
+[flake8-import-guard on PyPI](https://pypi.org/project/flake8-import-guard/)
 
 ## Features
 
