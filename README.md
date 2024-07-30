@@ -31,7 +31,7 @@ You can configure Flake8 Import Guard using Flake8's standard configuration syst
 
 ### Using Flake8 Configuration
 
-Add the following to your `.flake8` file:
+Add the following to your `.flake8` file.
 
 ```ini
 [flake8]
@@ -40,7 +40,7 @@ forbidden_imports = load_dotenv,subprocess
 
 ### Using pyproject.toml
 
-Add the following to your `pyproject.toml` file:
+Add the following to your `pyproject.toml` file.
 
 ```toml
 [tool.flake8-import-guard]
@@ -54,7 +54,7 @@ forbidden_imports = [
 
 ### Configuration
 
-Let's say you have the following configuration in your `.flake8` file:
+Let's say you have the following configuration in your `.flake8` file.
 
 ```ini
 [flake8]
@@ -63,7 +63,7 @@ forbidden_imports = load_dotenv,subprocess
 
 ### Sample Python File
 
-Consider the following Python file:
+Consider the following Python file.
 
 ```python
 # test_file.py
@@ -83,7 +83,7 @@ if __name__ == "__main__":
 
 ### Execution and Result
 
-When you run Flake8 on this file, you'll get the following output:
+When you run Flake8 on this file, you'll get the following output.
 
 ```console
 $ flake8 test_file.py
@@ -93,7 +93,7 @@ test_file.py:6:1: CPE001 Forbidden import found: dotenv.load_dotenv
 
 ## How It Works
 
-Flake8 Import Guard uses Git to detect changes in your codebase:
+Flake8 Import Guard uses Git to detect changes in your codebase.
 
 1. For new files, it checks all imports against the forbidden list.
 2. For existing files, it compares the current version with the last committed version to identify newly added imports.
