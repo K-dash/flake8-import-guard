@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [0.1.0] - 2024-07-30
+## [0.1.1] - 2024-07-30
 
 ### Added
 - Initial release of flake8-import-guard.
@@ -31,5 +31,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Security
 - N/A
 
-[Unreleased]: https://github.com/K-dash/flake8-import-guard/compare/v0.1.0...HEAD
-[0.1.0]: https://github.com/K-dash/flake8-import-guard/releases/tag/v0.1.0
+[Unreleased]: https://github.com/K-dash/flake8-import-guard/compare/v0.1.1...HEAD
+[0.1.1]: https://github.com/K-dash/flake8-import-guard/releases/tag/v0.1.1
