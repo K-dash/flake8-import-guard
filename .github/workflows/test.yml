@@ -62,12 +62,8 @@ jobs:
     #     pytest-coverage-path: ./pytest-coverage.txt
     #     junitxml-path: ./pytest.xml
 
-    - name: Pytest coverage comment
-      continue-on-error: true
-      uses: MishaKav/pytest-coverage-comment@v1.1.47
-      with:
-        pytest-coverage-path: ./pytest-coverage.txt
-        junitxml-path: ./pytest.xml
+    - name: Run tests and collect coverage
+      run: pytest --cov=./src --cov-report=xml
 
     - name: Upload coverage reports to Codecov
       uses: codecov/codecov-action@v4.0.1
