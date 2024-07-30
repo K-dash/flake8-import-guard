@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "flake8-import-guard"
-version = "0.1.4"
+version = "0.1.5"
 description = ""
 authors = ["K'  <51281148+K-dash@users.noreply.github.com>"]
 license = "MIT"
@@ -76,4 +76,4 @@ docstring-code-format = true
 CPE = "src.main:Flake8ImportGuard"
 
 # [tool.flake8-import-guard]
-# forbidden_imports = ["load_dotenv", "subprocess"]
+# forbidden_imports = ["load_dotenv", "subprocess", "dataclasses"]

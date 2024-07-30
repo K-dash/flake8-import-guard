@@ -45,4 +45,4 @@ ignore =
 # https://black.readthedocs.io/en/stable/guides/using_black_with_other_tools.html#flake8
 extend-ignore = E203
 filename = *.py
-forbidden_imports = load_dotenv,subprocess
+forbidden_imports = load_dotenv,subprocess,dataclasses

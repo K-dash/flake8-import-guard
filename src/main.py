@@ -16,7 +16,7 @@ class Flake8ImportGuard:
     """
 
     name = "flake8-import-guard"
-    version = "0.1.4"
+    version = "0.1.5"
     forbidden_imports: List[str] = []
 
     def __init__(self, tree: ast.AST, filename: str):
@@ -30,8 +30,8 @@ class Flake8ImportGuard:
         self.tree = tree
         self.filename = filename
 
-    @staticmethod
-    def add_options(option_manager: OptionManager) -> None:
+    @classmethod
+    def add_options(cls, option_manager: OptionManager) -> None:
         """
         Add Flake8 command-line options for this plugin.
 
@@ -59,8 +59,8 @@ class Flake8ImportGuard:
         if "forbidden_imports" in pyproject_config:
             cls.forbidden_imports.extend(pyproject_config["forbidden_imports"])
 
-    @staticmethod
-    def load_pyproject_config() -> Dict[str, List[str]]:
+    @classmethod
+    def load_pyproject_config(cls) -> Dict[str, List[str]]:
         """
         Load configuration from pyproject.toml file.
 
