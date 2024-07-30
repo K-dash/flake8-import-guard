@@ -63,7 +63,7 @@ jobs:
     #     junitxml-path: ./pytest.xml
 
     - name: Run tests and collect coverage
-      run: pytest --cov=./src --cov-report=xml
+      run: poetry run pytest --cov=./src --cov-report=xml
 
     - name: Upload coverage reports to Codecov
       uses: codecov/codecov-action@v4.0.1
