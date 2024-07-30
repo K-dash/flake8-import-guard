@@ -1,5 +1,8 @@
 
 ![GitHub License](https://img.shields.io/github/license/K-dash/flake8-import-guard)
+![PyPI Version](https://img.shields.io/pypi/v/flake8-import-guard)
+![Python Version](https://img.shields.io/badge/dynamic/toml?url=https://raw.githubusercontent.com/K-dash/flake8-import-guard/main/pyproject.toml&query=%24.tool.poetry.dependencies.python&label=python)
+![Codecov](https://img.shields.io/codecov/c/github/K-dash/flake8-import-guard)
 
 # Flake8 Import Guard
 
