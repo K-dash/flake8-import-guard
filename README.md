@@ -132,6 +132,7 @@ test_file.py:6:1: CPE001 Forbidden import found: dotenv.load_dotenv
 
 `flake8-import-guard` uses Git to detect changes in your codebase and enforce import restrictions. Here's a detailed explanation of its operation.
 
+
 1. For new files
    - It checks all imports against the forbidden list.
    - Any import found in the forbidden list is reported as a violation.
@@ -139,7 +140,9 @@ test_file.py:6:1: CPE001 Forbidden import found: dotenv.load_dotenv
 2. For existing files
    - It compares the current version with the last committed version to identify newly added imports.
    - Only newly added imports that match the forbidden list are reported as violations.
-   - Important note: If a forbidden import already exists in the file at the time of introducing `flake8-import-guard`, it will not be detected as a violation. The plugin focuses only on new changes to prevent disruption to existing codebases.
+
+> [!IMPORTANT]
+> If a forbidden import already exists in the file at the time of introducing `flake8-import-guard`, it will not be detected as a violation. The plugin focuses only on new changes to prevent disruption to existing codebases.
 
 3. Violation reporting
    - Only newly added imports that match the forbidden list are reported as violations.
