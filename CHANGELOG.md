@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [0.1.2] - 2024-07-30
+## [0.1.3] - 2024-07-30
 
 ### Added
 
@@ -37,5 +37,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - N/A
 
-[Unreleased]: https://github.com/K-dash/flake8-import-guard/compare/v0.1.2...HEAD
-[0.1.2]: https://github.com/K-dash/flake8-import-guard/releases/tag/v0.1.2
+[Unreleased]: https://github.com/K-dash/flake8-import-guard/compare/v0.1.3...HEAD
+[0.1.3]: https://github.com/K-dash/flake8-import-guard/releases/tag/v0.1.3
