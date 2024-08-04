@@ -4,7 +4,7 @@ We're thrilled that you're interested in contributing to Flake8 Import Guard! Th
 
 ## Code of Conduct
 
-By participating in this project, you are expected to uphold our Code of Conduct. Please report unacceptable behavior to [project_email@example.com].
+By participating in this project, you are expected to uphold our Code of Conduct. Please report unacceptable behavior to ["K'  <51281148+K-dash@users.noreply.github.com>"].
 
 ## How Can I Contribute?
 
