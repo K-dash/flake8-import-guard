@@ -61,6 +61,10 @@ Once installed, Flake8 Import Guard will automatically be used by Flake8. You ca
 flake8 path/to/your/code
 ```
 
+## Recommended Integration
+
+It is highly recommended to integrate Flake8 Import Guard into your pre-commit hooks and CI workflows. This ensures that import restrictions are enforced consistently across your development process, catching potential violations early and maintaining code quality standards.
+
 ## Configuration
 
 You can configure Flake8 Import Guard using Flake8's standard configuration system or through `pyproject.toml`.
