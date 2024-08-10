@@ -1,6 +1,7 @@
 
 ![GitHub License](https://img.shields.io/github/license/K-dash/flake8-import-guard)
 [![PyPI version](https://img.shields.io/pypi/v/flake8-import-guard.svg)](https://pypi.org/project/flake8-import-guard/)
+[![Downloads](https://static.pepy.tech/badge/flake8-import-guard)](https://pepy.tech/project/flake8-import-guard)
 ![Static Badge](https://img.shields.io/badge/Flake8-%5Ev7.1.0-blue?style=flat)
 [![Python versions](https://img.shields.io/pypi/pyversions/flake8-import-guard.svg)](https://pypi.org/project/flake8-import-guard/)
 [![codecov](https://codecov.io/gh/K-dash/flake8-import-guard/graph/badge.svg?token=4GG16B2ZU0)](https://codecov.io/gh/K-dash/flake8-import-guard)
