@@ -12,7 +12,8 @@
 
 Flake8 Import Guard is a Flake8 plugin that helps enforce import restrictions in your Python projects. It allows you to specify forbidden imports and detects their usage in your codebase, focusing on newly added imports in version-controlled files.
 
-[flake8-import-guard on PyPI](https://pypi.org/project/flake8-import-guard/)
+- [flake8-import-guard on PyPI](https://pypi.org/project/flake8-import-guard/)
+- [Introductory post on reddit](https://www.reddit.com/r/Python/comments/1eoip79/flake8_import_guard_automate_import_restriction/)
 
 ## Features
 
