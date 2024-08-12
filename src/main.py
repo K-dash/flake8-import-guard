@@ -148,16 +148,17 @@ class Flake8ImportGuard:
                     if isinstance(node, ast.Import)
                     else (f"{node.module}.{alias.name}")
                 )
-                if import_name in imports_to_check:
-                    for forbidden in self.forbidden_imports:
-                        if forbidden in import_name:
-                            yield (
-                                node.lineno,
-                                node.col_offset,
-                                f"CPE001 Forbidden import found: {import_name}",
-                                type(self),
-                            )
-                            break
+                if import_name not in imports_to_check:
+                    continue
+                for forbidden in self.forbidden_imports:
+                    if forbidden in import_name:
+                        yield (
+                            node.lineno,
+                            node.col_offset,
+                            f"CPE001 Forbidden import found: {import_name}",
+                            type(self),
+                        )
+                        break
 
     def __iter__(self):
         """
