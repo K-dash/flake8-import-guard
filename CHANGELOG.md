@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [0.1.6] - 2024-07-31
+## [1.0.0] - 2024-08-12
 
 ### Added
 
@@ -15,8 +15,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- `pyproject.toml`
-  - Upgrade flake8 to 7.1.0 for latest features and bug fixes.
+- Official release
+- Refactoring of `main.py`
 
 ### Deprecated
 
@@ -34,5 +34,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - N/A
 
-[Unreleased]: https://github.com/K-dash/flake8-import-guard/compare/v0.1.6...HEAD
-[0.1.6]: https://github.com/K-dash/flake8-import-guard/releases/tag/v0.1.6
+[Unreleased]: https://github.com/K-dash/flake8-import-guard/compare/v1.0.0...HEAD
+[1.0.0]: https://github.com/K-dash/flake8-import-guard/releases/tag/v1.0.0
