@@ -8,7 +8,7 @@
 ![GitHub last commit](https://img.shields.io/github/last-commit/K-dash/flake8-import-guard)
 
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/e552a818-ea4b-4e52-8ec3-ff2d14d5a390" />
+  <img src="https://github.com/user-attachments/assets/7f4a88d5-c52a-473f-bfa3-8eca21fa5c54" />
 </p>
 
 
