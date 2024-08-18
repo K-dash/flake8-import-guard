@@ -7,8 +7,12 @@
 [![codecov](https://codecov.io/gh/K-dash/flake8-import-guard/graph/badge.svg?token=4GG16B2ZU0)](https://codecov.io/gh/K-dash/flake8-import-guard)
 ![GitHub last commit](https://img.shields.io/github/last-commit/K-dash/flake8-import-guard)
 
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/e552a818-ea4b-4e52-8ec3-ff2d14d5a390" />
+</p>
 
-# Flake8 Import Guard 💂
+
+
 
 Flake8 Import Guard is a Flake8 plugin that helps enforce import restrictions in your Python projects. It allows you to specify forbidden imports and detects their usage in your codebase, focusing on newly added imports in version-controlled files.
 
