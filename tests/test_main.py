@@ -97,9 +97,9 @@ def test_run_with_different_file_states(
         f"but got {len(violations)}\nViolations: {violations}"
     )
     if expected_violations > 0:
-        assert any(
-            "load_dotenv" in v[2] for v in violations
-        ), "Expected violation for 'load_dotenv' not found"
+        assert any("load_dotenv" in v[2] for v in violations), (
+            "Expected violation for 'load_dotenv' not found"
+        )
 
 
 def test_add_options():
