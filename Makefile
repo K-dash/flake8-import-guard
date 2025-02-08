@@ -49,3 +49,8 @@ build_test:
 
 .PHONY: all
 all: format lint test
+
+# CI test
+.PHONY: ci
+test-ci:
+	uv run pytest --cov=./src --cov-report=xml
