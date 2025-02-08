@@ -29,14 +29,24 @@ By participating in this project, you are expected to uphold our Code of Conduct
 
 ## Development Setup
 
+This project uses `uv` as its Python project management tool for fast, reliable dependency management and virtual environment handling.
+
 To set up Flake8 Import Guard for development:
 
-1. Fork and clone the repo.
-2. Install dependencies and Activate the virtual environment.
+1. Install `uv` first if you haven't already:
+   ```bash
+   curl -LsSf https://astral.sh/uv/install.sh | sh
+   ```
+   For other installation methods, please refer to the [uv documentation](https://docs.astral.sh/uv/).
+
+2. Fork and clone the repo.
+
+3. Install dependencies and activate the virtual environment:
    ```
    make install
    ```
-3. Run tests to ensure everything is set up correctly:
+
+4. Run tests to ensure everything is set up correctly:
    ```
    make all
 
