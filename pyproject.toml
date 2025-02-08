@@ -1,14 +1,17 @@
-[tool.poetry]
+[project]
 name = "flake8-import-guard"
 version = "1.0.0"
 description = "Flake8 plugin to enforce import restrictions in Python projects."
-authors = ["K'  <51281148+K-dash@users.noreply.github.com>"]
-license = "MIT"
+authors = [{ name = "K' ", email = "51281148+K-dash@users.noreply.github.com" }]
+requires-python = ">=3.8.1,<4"
 readme = "README.md"
-homepage = "https://qiita.com/inetcpl"
-repository = "https://github.com/K-dash/flake8-import-guard"
-keywords = ["flake8", "plugin", "import", "linter"]
-packages = [{ include = "src" }]
+license = "MIT"
+keywords = [
+    "flake8",
+    "plugin",
+    "import",
+    "linter",
+]
 classifiers = [
     "Framework :: Flake8",
     "Environment :: Console",
@@ -21,36 +24,47 @@ classifiers = [
     "Programming Language :: Python :: 3.12",
     "Topic :: Software Development :: Quality Assurance",
 ]
+dependencies = [
+    "flake8>=7.1.0,<8",
+    "gitpython>=3.1.43,<4",
+    "python-dotenv>=1.0.1,<2",
+    "toml>=0.10.2,<0.11",
+]
 
-[tool.poetry.dependencies]
-python = "^3.8.1"
-flake8 = "^7.1.0"
-gitpython = "^3.1.43"
-python-dotenv = "^1.0.1"
-toml = "^0.10.2"
+[project.urls]
+Homepage = "https://qiita.com/inetcpl"
+Repository = "https://github.com/K-dash/flake8-import-guard"
 
-[tool.poetry.group.dev.dependencies]
-ruff = "^0.5.5"
-pre-commit = "^3.5.0"
-pytest = "^8.3.2"
-pytest-cov = "^5.0.0"
+[project.entry-points."flake8.extension"]
+CPE = "src.main:Flake8ImportGuard"
+
+[dependency-groups]
+dev = [
+    "ruff>=0.5.5,<0.6",
+    "pre-commit>=3.5.0,<4",
+    "pytest>=8.3.2,<9",
+    "pytest-cov>=5.0.0,<6",
+]
+
+[tool.hatch.build.targets.sdist]
+include = ["src"]
+
+[tool.hatch.build.targets.wheel]
+include = ["src"]
 
 [build-system]
-requires = ["poetry-core>=1.0.0"]
-build-backend = "poetry.core.masonry.api"
+requires = ["hatchling"]
+build-backend = "hatchling.build"
 
-# pytest settings
 [tool.pytest.ini_options]
 testpaths = 'tests'
 pythonpath = "."
 addopts = '-p no:warnings'                         # disable pytest warnings
 log_format = '%(name)s %(levelname)s: %(message)s'
 
-# ruff global settings
 [tool.ruff]
 line-length = 80
 
-# linter
 [tool.ruff.lint]
 # I: isort
 # F: Pyflakes
@@ -65,15 +79,10 @@ select = ['I', 'F', 'W', 'PL', 'PT']
 ignore-overlong-task-comments = true
 max-doc-length = 120
 
-# formatter
 [tool.ruff.format]
 preview = true
 quote-style = 'double'
 docstring-code-format = true
-
-# flake8-import-guard
-[tool.poetry.plugins."flake8.extension"]
-CPE = "src.main:Flake8ImportGuard"
 
 # [tool.flake8-import-guard]
 # forbidden_imports = ["load_dotenv", "subprocess", "dataclasses"]

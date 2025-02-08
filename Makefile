@@ -3,31 +3,31 @@ sources = src tests
 
 .PHONY: install
 install:
-	poetry install
-	poetry shell
+	uv install
+	uv shell
 	pre-commit install
 
 .PHONY: format
 format:
-	poetry run ruff check --fix $(sources)
-	poetry run ruff format $(sources)
+	uv run ruff check --fix $(sources)
+	uv run ruff format $(sources)
 
 .PHONY: lint
 lint:
-	poetry run ruff check $(sources)
-	poetry run ruff format --check $(sources)
+	uv run ruff check $(sources)
+	uv run ruff format --check $(sources)
 
 .PHONY: test
 test:
-	poetry run pytest
+	uv run pytest
 
 .PHONY: output_cov
 output_cov:
 	@rm -rf htmlcov
 	@mkdir -p htmlcov
-	poetry run coverage run -m pytest
-	poetry run coverage report
-	poetry run coverage html -d htmlcov
+	uv run coverage run -m pytest
+	uv run coverage report
+	uv run coverage html -d htmlcov
 
 .PHONY: clean
 clean:
@@ -38,7 +38,7 @@ clean:
 
 .PHONY: build
 build:
-	poetry build
+	uv build
 	python -m venv test_env
 	source test_env/bin/activate
 
