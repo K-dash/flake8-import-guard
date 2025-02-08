@@ -3,8 +3,7 @@ sources = src tests
 
 .PHONY: install
 install:
-	uv install
-	uv shell
+	uv sync
 	pre-commit install
 
 .PHONY: format
