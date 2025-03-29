@@ -86,10 +86,18 @@ docstring-code-format = true
 version_variable = "src/__init__.py:__version__"
 version_toml = ["pyproject.toml:project.version"]
 branch = "main"
-upload_to_pypi = true
-upload_to_release = true
-build_command = "python -m build"
-commit_parser = "angular"
+commit_version = true
+commit_message = "chore(release): {version} [skip ci]"
+commit_parser = "conventional"
+tag_format = "v{version}"
+upload_to_pypi = false
+upload_to_release = false
+commit = true
+tag = true
+push = true
+
+[tool.semantic_release.changelog]
+changelog_file = "CHANGELOG.md"
 
 [[tool.semantic_release.changelog.sections]]
 type = "feat"
@@ -135,16 +143,6 @@ hidden = false
 type = "chore"
 section = "Miscellaneous"
 hidden = true
-
-[tool.semantic_release.commit]
-message = "chore(release): {version} [skip ci]"
-
-[tool.semantic_release.tag]
-format = "v{version}"
-
-[tool.semantic_release.branches.main]
-match = "main"
-prerelease = false
 
 [tool.semantic_release.publish]
 dist_glob_patterns = ["dist/*.tar.gz", "dist/*.whl"]
