@@ -79,9 +79,10 @@ def test_run_with_different_file_states(
 ):
     """Test the run method with different file states and contents."""
     test_enforcer = enforcer(current_content)
-    with patch("os.path.exists", return_value=not is_new_file), patch(
-        "subprocess.run"
-    ) as mock_run:
+    with (
+        patch("os.path.exists", return_value=not is_new_file),
+        patch("subprocess.run") as mock_run,
+    ):
         mock_run.side_effect = [
             MagicMock(returncode=1 if is_new_file else 0),
             MagicMock(stdout=previous_content, returncode=0)
@@ -148,9 +149,10 @@ def test_run_empty_forbidden_imports(enforcer):
 
 def test_run_git_check(enforcer):
     """Test the run method when git check fails."""
-    with patch("os.path.exists", return_value=True), patch(
-        "subprocess.run"
-    ) as mock_run:
+    with (
+        patch("os.path.exists", return_value=True),
+        patch("subprocess.run") as mock_run,
+    ):
         mock_run.side_effect = [
             MagicMock(returncode=1),  # git ls-files
             MagicMock(returncode=1),  # git show (fails)
@@ -163,9 +165,10 @@ def test_run_git_check(enforcer):
 
 def test_run_git_command_fails(enforcer):
     """Test the run method when git command fails."""
-    with patch("os.path.exists", return_value=True), patch(
-        "subprocess.run"
-    ) as mock_run:
+    with (
+        patch("os.path.exists", return_value=True),
+        patch("subprocess.run") as mock_run,
+    ):
         mock_run.side_effect = [
             MagicMock(returncode=0),  # git ls-files
             subprocess.CalledProcessError(1, "git show"),  # git show (fails)
