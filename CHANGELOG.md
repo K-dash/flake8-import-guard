@@ -1,6 +1,14 @@
 # CHANGELOG
 
 
+## v1.2.0 (2025-03-29)
+
+### Features
+
+- Deprecated python3.8 ([#39](https://github.com/K-dash/flake8-import-guard/pull/39),
+  [`b0c861b`](https://github.com/K-dash/flake8-import-guard/commit/b0c861b84337c47d893eb698ff80add80d506d2c))
+
+
 ## v1.1.0 (2025-03-29)
 
 ### Bug Fixes
