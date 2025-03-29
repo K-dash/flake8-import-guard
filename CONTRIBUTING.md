@@ -4,7 +4,7 @@ We're thrilled that you're interested in contributing to Flake8 Import Guard! Th
 
 ## Code of Conduct
 
-By participating in this project, you are expected to uphold our Code of Conduct. Please report unacceptable behavior to ["K'  <51281148+K-dash@users.noreply.github.com>"].
+By participating in this project, you are expected to uphold our Code of Conduct. Please report unacceptable behavior to ["K' <51281148+K-dash@users.noreply.github.com>"].
 
 ## How Can I Contribute?
 
@@ -34,19 +34,23 @@ This project uses `uv` as its Python project management tool for fast, reliable 
 To set up Flake8 Import Guard for development:
 
 1. Install `uv` first if you haven't already:
+
    ```bash
    curl -LsSf https://astral.sh/uv/install.sh | sh
    ```
+
    For other installation methods, please refer to the [uv documentation](https://docs.astral.sh/uv/).
 
 2. Fork and clone the repo.
 
 3. Install dependencies and activate the virtual environment:
+
    ```
    make install
    ```
 
 4. Run tests to ensure everything is set up correctly:
+
    ```
    make all
 
@@ -62,9 +66,45 @@ To set up Flake8 Import Guard for development:
 
 ### Git Commit Messages
 
-- Please comply with the [Semantic Commit Message](https://gist.github.com/joshbuchea/6f47e86d2510bce28f8e7f42ae84c716) and [Commit Message Guideline](https://gist.github.com/robertpainsi/b632364184e70900af4ab688decf6f53)
+### Git Commit Messages
 
-### Python Styleguide
+This project uses the [Conventional Commits](https://www.conventionalcommits.org/) format for all commit messages. This enables automatic versioning and changelog generation.
+
+Your commit messages should follow this structure:
+
+```
+<type>(<scope>): <description>
+
+[optional body]
+
+[optional footer(s)]
+```
+
+Where `<type>` is one of:
+
+- **feat**: A new feature
+- **fix**: A bug fix
+- **docs**: Documentation only changes
+- **style**: Changes that do not affect the meaning of the code
+- **refactor**: A code change that neither fixes a bug nor adds a feature
+- **perf**: A code change that improves performance
+- **test**: Adding missing tests or correcting existing tests
+- **ci**: Changes to CI configuration files and scripts
+- **chore**: Other changes that don't modify source or test files
+
+Examples:
+
+```
+feat(parser): add ability to parse arrays
+fix(import): resolve issue with wildcard imports
+docs(readme): update installation instructions
+```
+
+Using this format helps in automatic versioning where:
+
+- `fix` triggers a PATCH release (1.0.0 -> 1.0.1)
+- `feat` triggers a MINOR release (1.0.0 -> 1.1.0)
+- `feat` or `fix` with `BREAKING CHANGE` in the footer triggers a MAJOR release (1.0.0 -> 2.0.0)### Python Styleguide
 
 - Follow [PEP 8](https://www.python.org/dev/peps/pep-0008/).
 - This is achieved using the `ruff` Linter and Formatter.
