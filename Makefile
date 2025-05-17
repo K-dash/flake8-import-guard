@@ -1,5 +1,6 @@
 .DEFAULT_GOAL := all
 sources = src tests
+VERSION := $(shell awk -F\" '/^version =/ {print $$2; exit}' pyproject.toml)
 
 .PHONY: install
 install:
@@ -43,7 +44,7 @@ build:
 
 .PHONY: build_test
 build_test:
-	pip install dist/flake8_import_guard-1.0.0-py3-none-any.whl
+	pip install dist/flake8_import_guard-$(VERSION)-py3-none-any.whl
 	flake8 --version
 
 .PHONY: all
