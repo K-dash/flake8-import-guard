@@ -1,6 +1,56 @@
 # CHANGELOG
 
 
+## v1.3.0 (2025-05-17)
+
+### Build System
+
+- Derive wheel version dynamically ([#44](https://github.com/K-dash/flake8-import-guard/pull/44),
+  [`c2f0f6c`](https://github.com/K-dash/flake8-import-guard/commit/c2f0f6c1712bcefc8d9da0f0cce7b2544e233084))
+
+### Chores
+
+- Change package ecosystem in dependabot.yml from “pip” to “uv” and set target branch to “main
+  ([#40](https://github.com/K-dash/flake8-import-guard/pull/40),
+  [`59bba3a`](https://github.com/K-dash/flake8-import-guard/commit/59bba3a7c566dfd44ce50eb5d6f47a9590f9d9a1))
+
+- **deps**: Bump flake8 from 7.1.2 to 7.2.0
+  ([#42](https://github.com/K-dash/flake8-import-guard/pull/42),
+  [`ec99096`](https://github.com/K-dash/flake8-import-guard/commit/ec99096d5df10ecf1d5b059684c89f6dbf8c4b54))
+
+Bumps [flake8](https://github.com/pycqa/flake8) from 7.1.2 to 7.2.0. -
+  [Commits](https://github.com/pycqa/flake8/compare/7.1.2...7.2.0)
+
+--- updated-dependencies: - dependency-name: flake8 dependency-type: direct:production
+
+update-type: version-update:semver-minor ...
+
+Signed-off-by: dependabot[bot] <support@github.com>
+
+Co-authored-by: dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.com>
+
+### Documentation
+
+- Fix formatting in contributing guide
+  ([#45](https://github.com/K-dash/flake8-import-guard/pull/45),
+  [`a72b4a6`](https://github.com/K-dash/flake8-import-guard/commit/a72b4a64595fc4a1ece65de151ce2ccf76b86775))
+
+### Features
+
+- Add type hints support and modernize type annotations
+  ([#48](https://github.com/K-dash/flake8-import-guard/pull/48),
+  [`905d1ac`](https://github.com/K-dash/flake8-import-guard/commit/905d1ac6feaa30c53e24bb2e7acb4a8425c7a8b6))
+
+- Refactor type hints to use built-in collection types (PEP 585) - Move Generator import to
+  collections.abc - Add py.typed marker file for better IDE support - Update build configuration to
+  include type information
+
+### Testing
+
+- Verify __iter__ delegates to run ([#46](https://github.com/K-dash/flake8-import-guard/pull/46),
+  [`a0b0521`](https://github.com/K-dash/flake8-import-guard/commit/a0b0521213a7f86e1fefc964c990d635691ae989))
+
+
 ## v1.2.0 (2025-03-29)
 
 ### Features
