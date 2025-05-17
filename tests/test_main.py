@@ -193,3 +193,20 @@ def test_get_imports_without_module(enforcer):
     test_enforcer = enforcer(code)
     imports = test_enforcer.get_imports(test_enforcer.tree)
     assert imports == {"some_function"}
+
+
+@pytest.mark.parametrize(
+    ("code", "forbidden", "expected_len"),
+    [
+        ("from dotenv import load_dotenv", ["load_dotenv"], 1),
+        ("import os", ["load_dotenv"], 0),
+    ],
+)
+def test_iteration_delegates_to_run(enforcer, code, forbidden, expected_len):
+    """Ensure iterating over the class delegates to ``run``."""
+    test_enforcer = enforcer(code)
+    Flake8ImportGuard.forbidden_imports = forbidden
+    run_result = list(test_enforcer.run())
+    iter_result = list(test_enforcer)
+    assert iter_result == run_result
+    assert len(iter_result) == expected_len
