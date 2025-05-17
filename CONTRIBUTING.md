@@ -66,8 +66,6 @@ To set up Flake8 Import Guard for development:
 
 ### Git Commit Messages
 
-### Git Commit Messages
-
 This project uses the [Conventional Commits](https://www.conventionalcommits.org/) format for all commit messages. This enables automatic versioning and changelog generation.
 
 Your commit messages should follow this structure:
@@ -104,7 +102,9 @@ Using this format helps in automatic versioning where:
 
 - `fix` triggers a PATCH release (1.0.0 -> 1.0.1)
 - `feat` triggers a MINOR release (1.0.0 -> 1.1.0)
-- `feat` or `fix` with `BREAKING CHANGE` in the footer triggers a MAJOR release (1.0.0 -> 2.0.0)### Python Styleguide
+- `feat` or `fix` with `BREAKING CHANGE` in the footer triggers a MAJOR release (1.0.0 -> 2.0.0)
+
+### Python Styleguide
 
 - Follow [PEP 8](https://www.python.org/dev/peps/pep-0008/).
 - This is achieved using the `ruff` Linter and Formatter.
