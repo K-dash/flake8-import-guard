@@ -46,6 +46,10 @@ include = ["src"]
 
 [tool.hatch.build.targets.wheel]
 include = ["src"]
+sources = ["src"]
+
+[tool.hatch.build.targets.wheel.shared-data]
+"src/py.typed" = "py.typed"
 
 [build-system]
 requires = ["hatchling"]

@@ -1,10 +1,14 @@
 import ast
 import os
 import subprocess
-from typing import Any, Dict, Generator, List, Set, Tuple
+from collections.abc import Generator
+from typing import Any
 
 import toml
 from flake8.options.manager import OptionManager
+
+ERROR_CODE = "CPE001"
+ERROR_MESSAGE = f"{ERROR_CODE} Forbidden import found: {{import_name}}"
 
 
 class Flake8ImportGuard:
@@ -17,7 +21,7 @@ class Flake8ImportGuard:
 
     name = "flake8-import-guard"
     version = "1.0.0"
-    forbidden_imports: List[str] = []
+    forbidden_imports: list[str] = []
 
     def __init__(self, tree: ast.AST, filename: str):
         """
@@ -60,12 +64,12 @@ class Flake8ImportGuard:
             cls.forbidden_imports.extend(pyproject_config["forbidden_imports"])
 
     @classmethod
-    def load_pyproject_config(cls) -> Dict[str, List[str]]:
+    def load_pyproject_config(cls) -> dict[str, list[str]]:
         """
         Load configuration from pyproject.toml file.
 
         Returns:
-            Dict[str, List[str]]: Configuration dictionary from pyproject.toml.
+            dict[str, list[str]]: Configuration dictionary from pyproject.toml.
         """
         try:
             with open("pyproject.toml", "r", encoding="utf-8") as f:
@@ -75,7 +79,7 @@ class Flake8ImportGuard:
             return {}
 
     @classmethod
-    def get_imports(cls, tree: ast.AST) -> Set[str]:
+    def get_imports(cls, tree: ast.AST) -> set[str]:
         """
         Extract all imports from the given AST.
 
@@ -83,7 +87,7 @@ class Flake8ImportGuard:
             tree (ast.AST): The AST to extract imports from.
 
         Returns:
-            Set[str]: A set of all imports found in the AST.
+            set[str]: A set of all imports found in the AST.
         """
         imports = set()
         for node in ast.walk(tree):
@@ -110,7 +114,7 @@ class Flake8ImportGuard:
         )
         return git_check.returncode != 0
 
-    def _get_previous_imports(self) -> Set[str]:
+    def _get_previous_imports(self) -> set[str]:
         """Return the imports from ``HEAD`` for ``self.filename``."""
         try:
             result = subprocess.run(
@@ -124,12 +128,12 @@ class Flake8ImportGuard:
         except subprocess.CalledProcessError:
             return set()
 
-    def run(self) -> Generator[Tuple[int, int, str, type], None, None]:
+    def run(self) -> Generator[tuple[int, int, str, type], None, None]:
         """
         Run the import check on the current file.
 
         Yields:
-            Tuple[int, int, str, type]: Violations found in the format (line, col, message, type).
+            tuple[int, int, str, type]: Violations found in the format (line, col, message, type).
         """
         if not self.forbidden_imports:
             return
@@ -159,7 +163,7 @@ class Flake8ImportGuard:
                         yield (
                             node.lineno,
                             node.col_offset,
-                            f"CPE001 Forbidden import found: {import_name}",
+                            ERROR_MESSAGE.format(import_name=import_name),
                             type(self),
                         )
                         break
