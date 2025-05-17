@@ -30,7 +30,7 @@ jobs:
           npm i -g commitlint@latest
           npm i -g @commitlint/config-conventional
           echo "module.exports = {extends: ['@commitlint/config-conventional']};" > commitlint.config.js
-          echo "${{ github.event.pull_request.title }}" | npx commitlint
+          echo "${{ github.event.pull_request.title }}" | npx commitlint --verbose
 
       - name: Labeling
         uses: actions/labeler@v5
