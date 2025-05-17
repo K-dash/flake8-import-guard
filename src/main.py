@@ -143,11 +143,14 @@ class Flake8ImportGuard:
             if not isinstance(node, (ast.Import, ast.ImportFrom)):
                 continue
             for alias in node.names:
-                import_name = (
-                    alias.name
-                    if isinstance(node, ast.Import)
-                    else (f"{node.module}.{alias.name}")
-                )
+                if isinstance(node, ast.Import):
+                    import_name = alias.name
+                else:
+                    import_name = (
+                        f"{node.module}.{alias.name}"
+                        if node.module
+                        else alias.name
+                    )
                 if import_name not in imports_to_check:
                     continue
                 for forbidden in self.forbidden_imports:

@@ -43,6 +43,18 @@ def test_run_with_forbidden_import(enforcer):
     )
 
 
+def test_run_with_relative_forbidden_import(enforcer):
+    """Test the run method with a forbidden relative import."""
+    code = "from . import load_dotenv"
+    test_enforcer = enforcer(code)
+    Flake8ImportGuard.forbidden_imports = ["load_dotenv"]
+    violations = list(test_enforcer.run())
+    assert len(violations) == 1
+    assert violations[0][2] == (
+        "CPE001 Forbidden import found: load_dotenv"
+    )
+
+
 def test_run_with_allowed_import(enforcer):
     """Test the run method with an allowed import."""
     code = "import os"
