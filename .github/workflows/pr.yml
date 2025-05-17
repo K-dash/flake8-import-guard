@@ -1,0 +1,38 @@
+name: PR
+
+on:
+  pull_request:
+    types: [opened, edited, reopened, synchronize]
+    branches:
+      - main
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  check-pr:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Linting commit message
+        uses: wagoid/commitlint-github-action@v6
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Linting commit
+        run: |
+          npm i -g conventional-changelog-conventionalcommits
+          npm i -g commitlint@latest
+          npm i -g @commitlint/config-conventional
+          echo "module.exports = {extends: ['@commitlint/config-conventional']};" > commitlint.config.js
+          echo "${{ github.event.pull_request.title }}" | npx commitlint --verbose
+
+      - name: Labeling
+        uses: actions/labeler@v5
+        # disable until figuring out a way to do this without pull_request_target
+        if: false
