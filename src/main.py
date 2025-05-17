@@ -98,6 +98,32 @@ class Flake8ImportGuard:
                     imports.update(alias.name for alias in node.names)
         return imports
 
+    def _is_new_file(self) -> bool:
+        """Return ``True`` if ``self.filename`` is not tracked by git."""
+        if not os.path.exists(self.filename):
+            return True
+        git_check = subprocess.run(
+            ["git", "ls-files", "--error-unmatch", self.filename],
+            capture_output=True,
+            text=True,
+            check=False,
+        )
+        return git_check.returncode != 0
+
+    def _get_previous_imports(self) -> Set[str]:
+        """Return the imports from ``HEAD`` for ``self.filename``."""
+        try:
+            result = subprocess.run(
+                ["git", "show", f"HEAD:{self.filename}"],
+                capture_output=True,
+                text=True,
+                check=True,
+            )
+            previous_tree = ast.parse(result.stdout)
+            return self.get_imports(previous_tree)
+        except subprocess.CalledProcessError:
+            return set()
+
     def run(self) -> Generator[Tuple[int, int, str, type], None, None]:
         """
         Run the import check on the current file.
@@ -108,36 +134,14 @@ class Flake8ImportGuard:
         if not self.forbidden_imports:
             return
 
-        is_new_file = not os.path.exists(self.filename)
-        if not is_new_file:
-            git_check = subprocess.run(
-                ["git", "ls-files", "--error-unmatch", self.filename],
-                capture_output=True,
-                text=True,
-                check=False,
-            )
-            is_new_file = git_check.returncode != 0
-
+        is_new_file = self._is_new_file()
         current_imports = self.get_imports(self.tree)
-
         if is_new_file:
             imports_to_check = current_imports
             previous_imports = set()
         else:
-            try:
-                result = subprocess.run(
-                    ["git", "show", f"HEAD:{self.filename}"],
-                    capture_output=True,
-                    text=True,
-                    check=True,
-                )
-                previous_content = result.stdout
-                previous_tree = ast.parse(previous_content)
-                previous_imports = self.get_imports(previous_tree)
-                imports_to_check = current_imports - previous_imports
-            except subprocess.CalledProcessError:
-                imports_to_check = current_imports
-                previous_imports = set()
+            previous_imports = self._get_previous_imports()
+            imports_to_check = current_imports - previous_imports
 
         for node in ast.walk(self.tree):
             if not isinstance(node, (ast.Import, ast.ImportFrom)):
