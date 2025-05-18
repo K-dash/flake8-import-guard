@@ -6,6 +6,7 @@
 [![Python versions](https://img.shields.io/pypi/pyversions/flake8-import-guard.svg)](https://pypi.org/project/flake8-import-guard/)
 [![codecov](https://codecov.io/gh/K-dash/flake8-import-guard/graph/badge.svg?token=4GG16B2ZU0)](https://codecov.io/gh/K-dash/flake8-import-guard)
 ![GitHub last commit](https://img.shields.io/github/last-commit/K-dash/flake8-import-guard)
+[![CI](https://github.com/K-dash/flake8-import-guard/actions/workflows/ci.yml/badge.svg)](https://github.com/K-dash/flake8-import-guard/actions/workflows/ci.yml)
 [![CodeQL](https://github.com/K-dash/flake8-import-guard/actions/workflows/github-code-scanning/codeql/badge.svg)](https://github.com/K-dash/flake8-import-guard/actions/workflows/github-code-scanning/codeql)
 
 <p align="center">
