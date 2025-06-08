@@ -90,7 +90,7 @@ jobs:
               if: steps.release.outputs.released == 'true'
 
             - name: Publish | Upload to GitHub Release Assets
-              uses: python-semantic-release/publish-action@9747ce2b9d2004be1341bfe05e04bcffa29994b0 # v9.21.0
+              uses: python-semantic-release/publish-action@1aa9f41fac5d531e6764e1991b536783337f3a56 # v9.21.1
               if: steps.release.outputs.released == 'true'
               with:
                 github_token: ${{ secrets.GITHUB_TOKEN }}
