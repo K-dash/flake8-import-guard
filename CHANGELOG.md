@@ -1,6 +1,54 @@
 # CHANGELOG
 
 
+## v1.3.1 (2025-06-08)
+
+### Continuous Integration
+
+- Add pull request validation workflow
+  ([#49](https://github.com/K-dash/flake8-import-guard/pull/49),
+  [`767c79c`](https://github.com/K-dash/flake8-import-guard/commit/767c79c4623cf0c2782e7f5b168ab68c4da7b4fc))
+
+* ci: add pull request validation workflow
+
+- Add GitHub Actions workflow to verify PR titles follow conventional commits - Configure commitlint
+  to validate commit messages - Include labeler action (currently disabled)
+
+* ci: add commitlint config
+
+* ci: fix commit lint config
+
+* ci: fix pr.yml
+
+- Pined action ([#50](https://github.com/K-dash/flake8-import-guard/pull/50),
+  [`fe3e1e3`](https://github.com/K-dash/flake8-import-guard/commit/fe3e1e31e263beb2f4047332b1256eb9cc02c1d5))
+
+### Performance Improvements
+
+- Add codspeed benchmarks ([#53](https://github.com/K-dash/flake8-import-guard/pull/53),
+  [`c679a96`](https://github.com/K-dash/flake8-import-guard/commit/c679a965635c8d635d4cd540bac42f7488f9797d))
+
+* ci: pined action
+
+* perf: add CodSpeed benchmarking infrastructure
+
+- Add pytest-codspeed dependency for performance testing - Create benchmark tests for core
+  functionality: - AST import extraction performance - Forbidden import checking with various
+  configurations - Nested module handling - Complex import pattern processing - Add GitHub Actions
+  workflow for automated benchmarking - Configure CodSpeed to run on main branch pushes and PRs
+
+🤖 Generated with [Claude Code](https://claude.ai/code)
+
+Co-Authored-By: Claude <noreply@anthropic.com>
+
+---------
+
+Co-authored-by: Claude <noreply@anthropic.com>
+
+Co-authored-by: Copilot Autofix powered by AI
+  <62310815+github-advanced-security[bot]@users.noreply.github.com>
+
+
 ## v1.3.0 (2025-05-17)
 
 ### Build System
