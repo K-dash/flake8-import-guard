@@ -1,0 +1,33 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:recommended",
+    ":dependencyDashboard"
+  ],
+  "timezone": "Asia/Tokyo",
+  "schedule": ["after 10pm every weekday", "before 5am every weekday", "every weekend"],
+  "labels": ["dependencies"],
+  "packageRules": [
+    {
+      "description": "Automerge non-major updates",
+      "matchUpdateTypes": ["minor", "patch"],
+      "automerge": true
+    },
+    {
+      "description": "Group dependency-groups updates",
+      "matchManagers": ["pep735"],
+      "groupName": "dependency-groups"
+    },
+    {
+      "description": "Group Python dev dependencies",
+      "matchDepTypes": ["dev"],
+      "groupName": "python dev dependencies"
+    }
+  ],
+  "rangeStrategy": "auto",
+  "lockFileMaintenance": {
+    "enabled": true,
+    "automerge": true,
+    "schedule": ["before 5am on monday"]
+  }
+}
