@@ -1,6 +1,40 @@
 # CHANGELOG
 
 
+## v1.3.2 (2025-06-08)
+
+### Bug Fixes
+
+- Correct Renovate configuration for dependency-groups
+  ([#57](https://github.com/K-dash/flake8-import-guard/pull/57),
+  [`25080f7`](https://github.com/K-dash/flake8-import-guard/commit/25080f7b6d3ab01e58ba469ff95420f54fbffc4c))
+
+Replace unsupported 'pep735' manager with 'dependency-groups' depType. PEP 735 dependency-groups are
+  automatically handled by the pep621 manager.
+
+🤖 Generated with [Claude Code](https://claude.ai/code)
+
+Co-authored-by: Claude <noreply@anthropic.com>
+
+### Chores
+
+- Migrate from Dependabot to Renovate Bot
+  ([#55](https://github.com/K-dash/flake8-import-guard/pull/55),
+  [`4bcd52f`](https://github.com/K-dash/flake8-import-guard/commit/4bcd52fb7356142296297e7e7a82e8372f9bc37d))
+
+- Replace .github/dependabot.yml with .github/renovate.json - Add support for PEP 735
+  dependency-groups in pyproject.toml - Configure Renovate Bot with auto-merge for minor/patch
+  updates - Enable dependency dashboard and lock file maintenance - Set Asia/Tokyo timezone and
+  appropriate scheduling
+
+🤖 Generated with [Claude Code](https://claude.ai/code)
+
+Co-authored-by: Claude <noreply@anthropic.com>
+
+- Update dev dependency packages ([#54](https://github.com/K-dash/flake8-import-guard/pull/54),
+  [`28d5291`](https://github.com/K-dash/flake8-import-guard/commit/28d5291c1e3c5a095872072d7a75ff58d011b527))
+
+
 ## v1.3.1 (2025-06-08)
 
 ### Continuous Integration
