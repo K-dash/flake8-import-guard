@@ -15,7 +15,7 @@
     },
     {
       "description": "Group dependency-groups updates",
-      "matchManagers": ["pep735"],
+      "matchDepTypes": ["dependency-groups"],
       "groupName": "dependency-groups"
     },
     {
