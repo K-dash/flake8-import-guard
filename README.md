@@ -35,6 +35,9 @@ Flake8 Import Guard is designed to address several common challenges in Python d
 - **Enforcing Security Measures**
     - Prevent the use of potentially unsafe or deprecated modules, enhancing the overall security of your codebase.
     - Prevent the import of forbidden external libraries, maintaining better control over your project's external dependencies.
+ 
+- **Guardrail for AI-Powered Development**
+    - As AI coding assistants become more common, they may introduce unintended or forbidden libraries. This plugin acts as a safety guardrail, automatically blocking prohibited imports in AI-generated code. This ensures that all code, whether written by humans or AI, adheres to your project's security, licensing, and architectural standards.
 
 - **Dependency Management**
     - Restrict and control project dependencies, reducing complexity and potential conflicts.
