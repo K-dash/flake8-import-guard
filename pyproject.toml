@@ -35,7 +35,7 @@ CPE = "src.main:Flake8ImportGuard"
 
 [dependency-groups]
 dev = [
-    "ruff>=0.13,<0.14",
+    "ruff>=0.14,<0.15",
     "pre-commit>=4.2.0,<5",
     "pytest>=8.4.0,<9",
     "pytest-cov>=6.1.1,<7",
