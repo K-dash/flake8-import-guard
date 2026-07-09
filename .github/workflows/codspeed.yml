@@ -33,7 +33,7 @@ jobs:
         run: uv sync --frozen
 
       - name: Run benchmarks
-        uses: CodSpeedHQ/action@eea136791682a28c919fed3838920681d1959d14 # v4.18.3
+        uses: CodSpeedHQ/action@9f3a37ece7abc84992501a7fcd54d1704f3458fa # v4.18.4
         with:
           token: ${{ secrets.CODSPEED_TOKEN }}
           run: uv run pytest tests/test_benchmark.py --codspeed
